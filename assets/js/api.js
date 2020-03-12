@@ -10,7 +10,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function (req, res) {
-    res.render('index.ejs');
+    res.render('index.ejs');   
 });
 
 app.post('/salva', (req, res) => {
