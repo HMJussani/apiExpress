@@ -9,6 +9,7 @@ lerna-debug.log*
 
 build/Release
 
+firebaseConfig.js
 # Dependency directories
 node_modules/
 

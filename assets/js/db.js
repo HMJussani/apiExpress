@@ -1,50 +1,43 @@
 const fireBase = require('firebase');
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDSu9mQ77ASPWZg-s0j45mRyiUVjK357J4",
-    authDomain: "estudo-d5862.firebaseapp.com",
-    databaseURL: "https://estudo-d5862.firebaseio.com",
-    projectId: "estudo-d5862",
-    storageBucket: "estudo-d5862.appspot.com",
-    messagingSenderId: "4938509167",
-    appId: "1:4938509167:web:3f9780708426e41f07d69a",
-    measurementId: "G-GKSWD7NJ7T"
-};
+const firebaseConfig = require('./firebaseConfig');
 
 fireBase.initializeApp(firebaseConfig);
-fireBase.database().ref().on('value', function (snapshot) {});
+fireBase.database().ref().on('value', function (snapshot) { });
 
-function dbExiste(db, title) {
+const dbExiste = (db, title) => {
     var existe = false;
     fireBase.database().ref(db).child(title).on('value', function (snapshot) {
         existe = snapshot.exists();
     });
     return existe;
 }
+exports.dbExiste = dbExiste;
 
-const writeDb = (db, dados) => {
-    return fireBase.database().ref(db).push(dados);
+const writeDb = (db, name, email, tel, skill) => {
+    fireBase.database().ref(`${db}/${name}`).set({
+        name,
+        email,
+        tel,
+        skill,
+    });
 }
-
 exports.writeDb = writeDb;
 
-const updateDb = (db, dados) => {
-    if (dbExiste(db, title) === false) {
-        alert(` ${title} não encontrado no banco de dados.`);
-        return;
-    }
-    return fireBase.database().ref(db).set(dados);
+const updateDb = (db, name, email, tel, skill) => {
+    fireBase.database().ref(`${db}/${name}`).update({
+        email,
+        tel,
+        skill,
+    });
 }
-
 exports.updateDb = updateDb;
 
-const readDb = (db, title) => {
-    if (dbExiste(db, title) === false) {
-        alert(` ${title} não encontrado no banco de dados.`);
+const readDb = (db, name) => {
+    if (dbExiste(db, name) === false) {
         return;
     }
     var data = [];
-    fireBase.database().ref(db).child(title).on('value', function (snapshot) {
+    fireBase.database().ref(db).child(name).on('value', function (snapshot) {
         var readings = snapshot.val();
         if (readings) {
             var currentValue;
@@ -54,9 +47,8 @@ const readDb = (db, title) => {
             }
         }
     });
-    return data;
+    return JSON.stringify(data);
 }
-
 exports.readDb = readDb;
 
 const readDbAll = (db) => {
@@ -71,20 +63,14 @@ const readDbAll = (db) => {
             }
         }
     });
-    return data;
+    return JSON.stringify(data);
 }
-
 exports.readDbAll = readDbAll;
 
 const deleteDb = (db, title) => {
-    if (dbExiste(db, title) === false) {
-        alert(` ${title} não encontrado no banco de dados.`);
-        return;
-    }
     var aRemover = fireBase.database().ref(`${db}/${title}/`);
     aRemover.remove(function (error) {
-        alert(`${title} removido do banco de dados.`);
+        return error;
     });
 }
-
 exports.deleteDb = deleteDb;  

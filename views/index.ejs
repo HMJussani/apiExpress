@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>CRUD em NodeJS</title>
 </head>
+
 <body>
 
-    <h2>Registrar<h2>
-    <form action="/salva" method="POST">
+  <h2>Registrar<h2>
+      <form action="/salva" method="POST">
         <input type="text" placeholder="Nome" name="name">
-        <input type="text" placeholder="Slack Name" name="slak">        
+        <input type="text" placeholder="Slack Name" name="email">
         <input type="text" placeholder="Ramal" name="tel">
         <input type="text" placeholder="Horário Trabalho" name="hora">
         <input type="text" placeholder="Skill" name="skill">
         <button type="submit">Enviar</button>
-    </form> 
+      </form>
+      <form action="/getUser" method="POST">
+        <input type="text" placeholder="Nome" name="name">
+        <button type="submit">Buscar</button>
+      </form>
+      <form action="/deleteUser" method="POST">
+        <input type="text" placeholder="Nome" name="name">
+        <button type="submit">Deletar</button>
+      </form>
+        <form action="/updateUser" method="POST">
+          <input type="text" placeholder="Nome" name="name">
+          <input type="text" placeholder="Slack Name" name="email">
+          <input type="text" placeholder="Ramal" name="tel">
+          <input type="text" placeholder="Horário Trabalho" name="hora">
+          <input type="text" placeholder="Skill" name="skill">
+          <button type="submit">Atualizar</button>
+        </form>
+      
 
 </body>
+
 </html>
